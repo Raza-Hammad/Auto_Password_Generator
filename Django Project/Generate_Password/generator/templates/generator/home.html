@@ -1,0 +1,53 @@
+{% extends 'generator/base.html' %}
+
+{% block content %}
+<h1>🔒 Generate SecurePass 🔑</h1>
+<hr>
+<form action="{% url 'password' %}">
+    <div class="form-group">
+        <label for="password_length">Password Length:</label>
+        <select class="form-control" name="length" id="password_length">
+            <optgroup label="Weak">
+                {% for i in weak_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </optgroup>
+            <optgroup label="Strong">
+                {% for i in strong_range %}
+                    {% if i == 16 %}
+                        <option value="{{ i }}" selected="selected">{{ i }}</option>
+                    {% else %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endif %}
+                {% endfor %}
+            </optgroup>
+            <optgroup label="Unbelievable">
+                {% for i in unbelievable_range %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </optgroup>
+        </select>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="lowercase" id="lowercase" checked disabled>
+        <label class="form-check-label" for="lowercase">Include Lowercase Characters</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="uppercase" id="uppercase">
+        <label class="form-check-label" for="uppercase">Include Uppercase Characters</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="numbers" id="numbers">
+        <label class="form-check-label" for="numbers">Include Numbers</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="symbols" id="symbols">
+        <label class="form-check-label" for="symbols">Include Symbols</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="ambiguous" id="ambiguous">
+        <label class="form-check-label" for="ambiguous">Avoid ambiguous letters</label>
+    </div>
+    <button class="btn btn-success button" type="submit">Generate Password</button>
+</form>
+{% endblock %}
